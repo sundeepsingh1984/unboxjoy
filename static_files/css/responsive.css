@@ -1,0 +1,225 @@
+@media (max-width: 1200px){
+    a#spin_button {
+        width: 85%;
+        font-size: 1.7rem;
+    }
+    .mainbox {
+        width:400px;
+        height:400px;
+    }
+}
+@media (max-width: 992px) {
+    a#spin_button {
+        width: 80%;
+        font-size: 1.6rem;
+    }
+    .navbar .container {
+        padding: 0 15px;
+    }
+    .nav>li>a img {
+        filter: invert(1);
+    }
+    .navbar-light .navbar-toggler {
+        margin: 12px 0;
+        border-color: rgba(0,0,0,.5);
+    }
+    .navbar-light .navbar-nav > li > a, .navbar-light .navbar-nav>li>a:focus, .navbar-light .navbar-nav>li>a:active, .navbar-light .navbar-nav>li>a:hover {
+        border-bottom: 0;;
+    }
+    .navbar {
+        padding-bottom: 25px;
+    }
+    .navbar-brand img {
+        width:12%;
+    }
+    .navbar-collapse {
+        background: #003a53;
+        width: 100%;
+        margin-top: 30px;
+        border-radius: 30px;
+        padding:0;
+    }
+    .navbar-collapse.in {
+        height:100vh;
+    }
+    .navbar-nav {
+        margin:0;
+        padding:20px;
+    }
+    .navbar-light .navbar-nav > li > a {
+        color:#fff!important;
+    }
+    .dropdown-menu {
+        width: 100%;
+        left: 10px;
+        background: none;
+        box-shadow: none;
+        position: inherit;
+        margin-bottom:15px;
+    }
+    .dropdown-menu>a {
+        padding: 4px 20px;
+        color: #fff;
+        font-weight: 500;
+        font-size: 1em;
+    }
+    .adspace {
+        min-height: auto;
+        margin-bottom:25px;
+    }
+    .giveaway {
+        min-height:auto;
+        margin-bottom: 25px;
+    }
+    .videos {
+        width:100%;
+    }
+    
+    .trending {
+        margin: 20px 0;
+        float: left;
+    }
+}
+@media (max-width: 767px) {
+    .mainbox {
+        width: 100%;
+        height:450px;
+      }
+    .main-se {
+        margin-top:4px;
+    }
+    .carousel-item img {
+        height: 200px;
+    }
+    .carousel-indicators {
+        left:8%;
+        text-align: left;
+        margin-left: 0;
+        margin-bottom: 5px;
+    }
+    .carousel-indicators .active {
+        background-color: #ffdd09;
+        width: 12px;
+        height: 12px;
+        margin: 0 3px;
+    }
+    .carousel-indicators li {
+        width: 12px;
+        height: 12px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 24px;
+        margin:0 3px;
+    }    
+    .fixed-header {
+        padding: 0;
+        height: auto;
+    }    
+    .modal-content {
+        width:90%;
+        margin:5% auto;
+    }
+    .about-content {
+        padding:0 20px;
+    }
+    .item .wrapper .name_area p {
+        font-size:13px;
+    }
+    .item .row {
+        margin: 0;
+    }
+    .item .wrapper {
+        margin:15px 0;
+    }
+    .close {
+        color: #fff;
+        float: right;
+        font-size: 2em;
+        font-weight: normal;
+        background: #182339;
+        opacity: 1;
+        padding: 15px 21px;
+        border-radius: 35px;
+        line-height: 25px;
+        width:57px;
+    }
+    .modal-content p {
+        font-size: 2em;
+        line-height: 1.3em;
+        text-align: center;
+        font-weight: 700;
+        padding: 80px 35px 30px;
+    }
+    .modal-content input[type=text], textarea {
+        border-radius: 20px;
+        padding: 15px;
+        width: 90%;
+        margin: 5px 5% 30px;
+        border: 0px;
+        font-size: 1.2em;
+    }
+    .modal-content .btn-priamry {
+        background: #0093f1;
+        color: #fff;
+        padding: 8px 25px;
+        font-weight: bold;
+        border-radius: 20px;
+        font-size: 1.7em;
+    }
+    a#spin_button {
+        width: 90%;
+        font-size: 1.5rem;
+    }
+    .text-right {
+        text-align: center;
+    }
+    .subfooter .col-lg-6 img {
+        margin:0 34%;
+        text-align: center;
+    }
+    .subfooter ul {
+        text-align: right;
+    }
+    .subfooter .quicklinks ul {
+        text-align: left;
+    }
+    footer {
+        text-align: center;
+    }
+    footer p.poweredby {
+        text-align: center !important;
+    }
+    .posts {
+        width:100%;
+    }
+    .video1 iframe {
+        width:100%!important;
+    }
+    .video2 iframe {
+        width:100%!important;
+    }
+    .topsocial {
+        display: block;
+    }
+    .topinfo {
+        font-size: 9px;
+        font-weight: 400;
+        margin: 6px 0;
+    }
+    .navbar-header img {
+        margin: 0;
+        width: 20%;
+    }
+}
+@media (max-width: 567px) {
+    .navbar-brand img {
+        width:25%;
+    }
+    .mainbox {
+        height: 460px;
+    }
+}
+@media (max-width: 450px) {
+    .mainbox {
+        height: 330px!important;
+    }
+}

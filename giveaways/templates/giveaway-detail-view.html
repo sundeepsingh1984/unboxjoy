@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load static %}
+
+ 
+{% block modal %}
+    
+{% include 'player-modal.html' %}
+ 
+
+    
+  {% endblock modal %}
+    
+
+
+
+{% block content %}
+
+<section class="col-12 mt-2 mb-2 d-flex  align-items-center">
+
+<div class=" container col-md-12 p-2">
+    <div class="row  w-100">
+        
+        <div class="card w-100 card-details">
+            <div class="card-header card-details-header text-center">
+               <h3> Giveaway-Details  </h3>
+            </div>
+            <div class="card-body text-center">
+                <h4 class="card-title">{{details.giveaway_title}}</h4>
+                <p class="card-text">{{details.giveaway_desc.html|safe}}</p>
+
+              
+                   
+
+
+                
+                <ul class="list-group">
+
+
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Category:<span class="badge badge-pill badge-info">{{details.giveaway_cat.cat_name}}</span>
+                    </li>
+
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Created-at:<span class="badge badge-pill badge-warning">{{details.created_at|date:'Y-m-d H:i'}}</span>
+                    </li>
+
+
+
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Last-Date-To-Apply:<span class="badge badge-pill badge-danger">{{details.last_apply_date|date:'Y-m-d H:i'}}</span>
+                    </li>
+
+
+                    
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Status:
+                        {% if details.result_announced == False%}
+                        <span class="badge badge-pill badge-primary">Active</span>
+                        {% else %}
+                        <span class="badge badge-pill badge-danger">Declared</span>
+                        {% endif %}
+                      </li>
+
+
+
+
+
+                 
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                       Total-Winners
+                      <span class="badge badge-info badge-pill">{{details.total_winners}}</span>
+                    </li>
+
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Participants-Count
+                       <span class="badge badge-info badge-pill">{{details.giveawayregistration_set.count}}</span>
+                     </li>
+                   
+                  </ul>
+
+
+
+            </div>
+            <div class="card-footer text-muted text-center cart-foot">
+
+                <button type="button " class="btn card-botton" data-toggle="modal" data-target="#playerModal" data-whatever="{{details.giveaway_id}}">Apply</button>
+               
+                
+            </div>
+        </div>
+    
+        
+
+
+
+    </div>
+</div>
+
+
+</section>
+
+
+
+
+
+
+<section class="pt-5 pb-5 mt-2 mb-2  ">
+    <div class="container col-12 ">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3 class="mb-2 mt-2 card-details-header "> Recent Giveaways </h3>
+            </div>
+            <div class="col-12 text-right">
+                <a class="btn  mb-3 mr-1 card-details-header" href="#carouseldeclared" role="button" data-slide="prev">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+              
+                  <a class="btn mb-3 card-details-header" href="#carouseldeclared" role="button" data-slide="next">
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-12">
+                <div id="carouseldeclared" class="carousel slide" data-ride="carousel">
+
+                  <div class="carousel-inner">
+                  
+                  {% for active_list in announced_giveaways %}
+
+
+        
+
+                  
+                  {% if forloop.counter == 1  %}
+                  <div class="carousel-item active">
+                    
+                  <div class="row">
+                     {% for giveaway in active_list  %}
+                    
+                     <div class="col-md-4 mb-3 ">
+                      <div class="card giveaway-card mt-2 mb-6 ml-2 mr-2" >
+
+                        <div class="card-header ">
+                          <img class="card-img-top" src="{% static 'images/giveaway.png' %}" alt="Card image cap">
+                        </div>
+                     
+                        
+
+
+
+
+
+                        <div class="card-body">
+                          <h5 class="card-title">{{giveaway.giveaway_title}}</h5>
+                          <p class="card-text">{{giveaway.giveaway_desc.html|safe}}</p>
+                        </div>
+                        <div class="card-footer text-center cart-foot">
+                         
+                          <button type="button " class="btn card-detail-botton">Winners</button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {% endfor %}
+                  </div>
+                  </div>
+
+                  {% else %}
+
+                  <div class="carousel-item">
+
+                    <div class="row">
+
+
+
+
+                    {% for giveaway in active_list  %}
+                    
+                    <div class="col-md-4 mb-3 ">
+                     <div class="card giveaway-card mt-2 mb-6 ml-2 mr-2" >
+
+                       <div class="card-header ">
+                         <img class="card-img-top" src="{% static 'images/giveaway.png' %}" alt="Card image cap">
+                       </div>
+                    
+                       
+
+
+
+
+
+                       <div class="card-body">
+                         <h5 class="card-title">{{giveaway.giveaway_title}}</h5>
+                         <p class="card-text">{{giveaway.giveaway_desc.html|safe}}</p>
+                       </div>
+                       <div class="card-footer text-center cart-foot">
+                         <button type="button " class="btn card-detail-botton">Winners</button>
+
+                         
+                       </div>
+                     </div>
+                   </div>
+
+                   {% endfor %}
+                 
+
+
+                                
+
+
+
+
+
+                    </div>
+
+                  </div>
+
+
+                  {% endif %}
+
+                      
+         
+                      
+
+                
+
+                   
+                    {% endfor %}
+                  
+                    
+                     
+                   
+
+                </div>
+                    
+
+
+
+
+
+
+                    
+                  
+                    
+
+
+
+
+
+                  
+               </div>     
+                                                
+              </div>
+      </div>
+    </div>
+  </section>
+
+    
+{% endblock content %}
+    

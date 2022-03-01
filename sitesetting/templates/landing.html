@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="main-se">
+{% block banner  %} 
+
+{% include "./common/banner.html" %}
+
+{% endblock banner %}
+
+
+<section class="main_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
+                <div class="adspace">
+                    {{  request.site_info.adsense_code|safe}}
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="giveaway" style="">
+                    <img src="images/giveaway.png" class="img-fluid" alt="">
+                    <img src="images/arrow-bottom.png" class="img-fluid arrow-bottom" alt="">
+
+                    <canvas id="canvas" width="400" height="440" data-responsiveMinWidth="180" data-responsiveScaleHeight="true" data-responsiveMargin="50">
+                    </canvas>
+                 
+                   <h3 class="text-center timerarea text-white d-flex justify-content-center p-3 " > <div  class="timer d-flex text-center" data-seconds-left="{{time_diff}}"> Giveaway In  &nbsp;   </div> </h3>  
+                </div>
+
+
+             
+                   
+               
+            
+            
+            
+            
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
+                <div class="advertisement">
+                    <div class="ad1">
+                        <a href="#"><img src="images/ad1.png" class="img-responsive" alt=""></a>
+                    </div>
+                    <div class="ad2">
+                        <a href="#"><img src="images/ad2.png" class="img-responsive" alt=""></a>
+                    </div>
+                </div>
+            </div>
+
+      {{wheel_data|json_script:"wheel-data" }}
+
+
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+</div>
+
+<script>
+
+// JavaScript
+ segment = document.getElementById('wheel-data').textContent;
+ wheel_data=JSON.parse(JSON.parse(segment))
+
+var no_of_segment="{{len}}"
+
+
+
+
+
+
+ // The responisve parameter is the only difference needed to make a wheel responsive.
+ let theWheel = new Winwheel({
+    'numSegments': no_of_segment,
+    'textFontSize': 18,
+    'responsive': true, // This wheel is responsive!
+    'segments':wheel_data,
+    'pins': {
+        'outerRadius': 6,
+        'responsive': true, // This must be set to true if pin size is to be responsive.
+    },
+    'animation': {
+        'type': 'spinToStop',
+        'duration': 5,
+        'spins': 8,
+        'callbackFinished': alertPrize
+    }
+});
+
+// Called by the onClick of the canvas, starts the spinning.
+function startSpin() {
+    // Stop any current animation.
+    theWheel.stopAnimation(false);
+
+    // Reset the rotation angle to less than or equal to 360 so spinning again works as expected.
+    // Setting to modulus (%) 360 keeps the current position.
+    theWheel.rotationAngle = theWheel.rotationAngle % 360;
+
+    // Start animation.
+    theWheel.startAnimation();
+}
+
+function alertPrize(indicatedSegment) {
+    // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
+    alert("Congratulations " + indicatedSegment.text);
+}
+
+
+
+$(function(){
+    $('.timer').startTimer({
+      onComplete: function(){
+        startSpin();
+      },
+      allowPause: true
+    });
+})
+
+
+</script>
+
+
+{% endblock content %}
+
+
+
+
+
+

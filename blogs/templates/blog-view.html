@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+
+
+{% block content %}
+<!-- blog -->
+<section class="section">
+  
+  <div class="container col-12 ">
+
+
+
+
+  {% if page_obj %}
+  {% for post in page_obj.object_list %}
+
+
+  {% if forloop.first%}
+
+  <div class="card-header card-details-header text-center">
+    <h3> {{post.blog_category.category_name}} Blogs  </h3>
+ </div>
+
+
+
+  {% endif %}
+
+
+  {% endfor%}
+
+
+
+
+
+
+
+
+  <div class="row">
+    <div class="col-lg-8 order-2 order-lg-1 p-5">
+      <div class="row">
+        <!-- blog post -->
+
+
+        {% for post in page_obj.object_list %}
+
+
+        <div class="col-sm-4 mb-4">
+          <article class="card card-details mt-2 mb-2  rounded-10 position-relative box-shadow zindex-1">
+            <div class="card-type">Article</div>
+            <img class="card-img-top rounded-top-0 clip-half-cycle" height="250px" src="{{post.background_img.url}}" alt="blog-thumb">
+            <div class="card-body blog-card-body" style="background-color:white;">
+              <div class="title-border-left">
+                <div class="card-meta text-uppercase mb-2">by <strong class="text-dark">admin</strong>/ on <strong class="text-dark">{{post.created_at|date:'Y-m-d H:i'}}</strong></div>
+                <h4 class="card-title"><a href="{{post.get_absolute_url}}" class="text-dark">{{post.blog_title|capfirst}}</a></h4>
+              </div>
+              <p class="card-text">{{post.blog_content.html|truncatewords_html:10|safe}}</p>
+              <a href="{{post.get_absolute_url}}" class="btn btn-secondary w-100">read more</a>
+            </div>
+          </article>
+        </div>
+
+        {% endfor %}
+        
+      
+
+      
+      </div>
+{% if page_obj.has_other_pages %}
+
+<nav aria-label="Page navigation example">
+
+
+<ul class="pagination justify-content-first">
+
+  {% if page_obj.has_previous %}
+  
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"> &laquo; previous</a></li>
+  {% else %}
+  <li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">Previous</a>
+  </li>
+  {% endif %}
+  {% for i in page_obj.paginator.page_range %}
+    {% if page_obj.number == i %}
+      <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next &raquo;</a></li>
+  {% else %}
+  <li class="page-item disabled">
+    <a class="page-link" href="#" tabindex="-1">Next</a>
+  </li>
+    
+  {% endif %}
+</ul>
+
+</nav>
+{% endif %}
+
+    </div>
+    <!-- sidebar -->
+
+    {% block aside %}
+
+    {% include 'aside.html' %}
+
+    
+    
+    {% endblock aside %}
+
+
+
+
+
+    <!-- /sidebar -->
+  
+  
+  
+  </div>
+  
+
+
+
+{% else %}
+
+<div class="card-header card-details-header text-center">
+  <h3>  Blogs  </h3>
+</div>
+<div class="container-fluid mt-100 ">
+  <div class="row">
+      <div class="col-md-12 mb-12">
+          <div class="card">
+              <div class="card-header">
+               
+              </div>
+              <div class="card-body cart">
+                  <div class="col-sm-12 empty-cart-cls text-center"> <img src="{% static 'images/empty.png' %}" width="130" height="130" class="img-fluid mb-4 mr-3">
+                      <h3><strong>No Records Found</strong></h3>
+                          </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+
+  
+  {% endif %}
+
+  
+  </div>
+</section>
+
+
+
+
+
+
+
+{% endblock %}

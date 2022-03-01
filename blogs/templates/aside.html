@@ -1,0 +1,250 @@
+{% block aside %}
+
+<aside class="mb-5 bg-white rounded  col-lg-4 order-2 order-lg-2 p-5">
+    <div class="bg-white  py-5 box-shadow-aside mb-5">
+      <h4 class="mb-4 aside-head">Trending/Latest</h4>
+      
+        <div class="btn-group mb-3 w-100 " role="group" aria-label="">
+        <a class="btn w-50" href="#sideblog" role="button" data-slide="prev">
+           Trending
+        </a>
+        <a class="btn w-50 " href="#sideblog" role="button" data-slide="next">
+            Latest
+        </a>
+      </div>
+      
+      
+      <div id="sideblog" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row">
+
+              {% for blog in latest_blogs  %}
+              {% if forloop.last %}
+              <div class="media">
+                <img class="mr-3 img-thumb-side" src="{{blog.background_img.url}}" alt="post-thumb">
+                <div class="media-body">
+                  <h5 class="mt-0"><a href="{{blog.get_absolute_url}}" class="ext-dark">{{blog.blog_title|capfirst}}</a></h5>
+                  <strong class="ml-2"> By Admin  </strong>  {{blog.created_at|date:"j M,o"}}
+                
+                  <div class="media-body">
+                    <a href="{{blog.get_absolute_url}}" class=" mt-0 btn btn-side  ">Read</a>
+                    </div>
+                
+                </div>
+
+
+              </div>
+
+             
+                {% else %}
+              <div class="media border-bottom border-color  mb-3">
+                <img class="mr-3 img-thumb-side" src="{{blog.background_img.url}}" alt="post-thumb">
+                <div class="media-body">
+                  <h5 class="mt-0"><a href="{{blog.get_absolute_url}}" class="ext-dark">{{blog.blog_title|capfirst}}</a></h5>
+                  <strong class="ml-2"> By Admin  </strong>  {{blog.created_at|date:"j M,o"}}
+              
+
+                  <div class="media-body">
+                    <a href="{{blog.get_absolute_url}}" class=" mt-0 btn btn-side  ">Read</a>
+                  </div>
+                
+
+
+
+                </div>
+
+                </div>
+           {% endif %}
+          
+           {% endfor %}
+          </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="carousel-item">
+            <div class="row">
+
+              {% for blog in latest_blogs  %}
+              {% if forloop.last %}
+              <div class="media">
+                <img class="mr-3 img-thumb-side" src="{{blog.background_img.url}}" alt="post-thumb">
+                <div class="media-body">
+                  <h5 class="mt-0"><a href="{{blog.get_absolute_url}}" class="ext-dark">{{blog.blog_title|capfirst}}</a></h5>
+                  <strong class="ml-2"> By Admin  </strong>  {{blog.created_at|date:"j M,o"}}
+           
+                  <div class="media-body">
+                    <a href="{{blog.get_absolute_url}}" class=" mt-0 btn btn-side  ">Read </a>
+                    </div>
+               
+                </div>
+
+
+                 </div>
+
+             
+                {% else %}
+              <div class="media border-bottom border-color  mb-3">
+                <img class="mr-3 img-thumb-side" src="{{blog.background_img.url}}" alt="post-thumb">
+                <div class="media-body">
+                  <h5 class="mt-0"><a href="{{blog.get_absolute_url}}" class="ext-dark">{{blog.blog_title|capfirst}}</a></h5>
+                  <strong class="ml-2"> By Admin  </strong>  {{blog.created_at|date:"j M,o"}}
+               
+                  <div class="media-body">
+                    <a href="{{blog.get_absolute_url}}" class=" mt-0 btn btn-side  ">Read</a>
+                  </div>
+                
+                </div>
+
+               </div>
+           {% endif %}
+          
+           {% endfor %}
+          </div>
+
+
+
+        </div>
+
+          
+       
+        
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+     
+        
+
+
+          
+
+      
+
+
+
+
+
+   
+
+    
+
+      
+  
+  
+
+    <!--end side top -->
+
+
+  
+
+
+
+        
+          
+          
+
+
+
+
+
+
+         
+
+
+
+
+
+
+
+
+
+           
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+                
+            
+
+               
+
+
+
+   
+    <!-- latest post -->
+    
+    <!-- categories -->
+    <div class="bg-white px-4 py-5 box-shadow-aside mb-2">
+      <h4 class="mb-4 aside-head">Category</h4>
+      <ul class="list-styled style-circle">
+
+        {% for category  in categories %}
+        <li class="border-bottom border-top border-color border-warning"><a href="{%  url 'blogs:blogs-by-category' category.category_id %}" class="text-color d-block pb-3 mt-3 text-decoration-none">
+          {{category.category_name}}</a></li>
+      
+        
+        
+        {% endfor %}
+        </ul>
+    </div>
+    <!-- tags -->
+    <div class="bg-white px-4 py-5 box-shadow-aside mb-2">
+      <h4 class="mb-4 aside-head">TAGS</h4>
+      <ul class="list-inline tag-list">
+        {% for tag  in  tags %}
+        
+        <li class="list-inline-item"><a href="{% url 'blogs:blogs-by-sub-category' tag.cat_id.category_id tag.sub_cat_id %}" class="badge badge-warning">{{tag.sub_cat_name|capfirst}}</a></li>
+        
+        {% endfor %}
+        
+       
+      </ul>
+    </div>
+  </aside>
+
+
+
+
+
+
+
+
+
+
+{% endblock aside %}

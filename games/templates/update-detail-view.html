@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- page title -->
+{% block content %}
+
+
+
+<section class="section bg-cover overlay" data-background=>
+    <div class="container ">
+      <div class="row ">
+        <div class="col-12">
+          
+          <div class="card-header card-details-header text-center mt-2">
+            <h3> {{update.update_type.update_type_name|capfirst}} Details  </h3>
+         </div>
+          <!-- breadcrumb -->
+         
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /page title -->
+  
+  <!-- blog details -->
+  <section class="section mt-2">
+    <div class="container">
+      <div class="row ">
+        <div class="col-lg-8">
+          <!-- post thumb -->
+          <div class="position-relative mb-5">
+            <img src="{{update.update_cover.url}}" alt="post thumb" class="img-fluid w-100 ">
+            <div class="card-type hover-ripple">{{update.update_for.game_name|capfirst}}</div>
+          </div>
+
+          <h2> {{update.update_title|capfirst}}    </h2>
+
+
+          <div class="card-meta text-uppercase mb-2">by <strong class="text-dark">admin</strong>/ on <strong class="text-dark"> {{update.created_at|date:"j M,o"}}</strong></div>
+
+          {{update.update_description.html|safe}}
+
+
+
+
+    {% if update.update_link %}
+    
+      <!-- tags -->
+      <div class="mb-3">
+        <h5 class="d-inline-block mr-3">Update-Link:</h5>
+        <ul class="list-inline d-inline-block">
+           
+
+            <li class="list-inline-item"><a href="{{ update.update_link }}" class="badge badge-warning">Update-Official-Link</a></li>
+          
+            
+         
+           </ul>
+      </div>
+    
+    
+    {% endif %}
+
+          
+          
+  
+        
+          
+    
+  
+         
+      
+         
+        </div>
+         <!-- sidebar -->
+        {% block aside %}
+        
+        {% include "update-aside.html" %}
+        
+        {% endblock aside %}
+
+
+
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+{% endblock content %}
+
+
+
+

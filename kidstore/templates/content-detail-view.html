@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- page title -->
+{% block content %}
+
+
+
+<section class="section bg-cover overlay" data-background=>
+    <div class="container ">
+      <div class="row ">
+        <div class="col-12">
+          
+          <div class="card-header card-details-header text-center mt-2">
+            <h3> {{content.content_type.content_type_name|capfirst}} Details  </h3>
+         </div>
+          <!-- breadcrumb -->
+         
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /page title -->
+  
+  <!-- blog details -->
+  <section class="section mt-2">
+    <div class="container">
+      <div class="row ">
+        <div class="col-lg-8">
+          <!-- post thumb -->
+          <div class="position-relative mb-5">
+            <img src="{{content.content_cover.url}}" alt="post thumb" class="img-fluid w-100 ">
+            <div class="card-type hover-ripple">{{content.content_type.content_type_name|capfirst}}</div>
+          </div>
+
+          <h2> {{content.content_title|capfirst}}    </h2>
+
+
+          <div class="card-meta text-uppercase mb-2">by <strong class="text-dark">admin</strong>/ on <strong class="text-dark"> {{content.created_at|date:"j M,o"}}</strong></div>
+
+          {% if content.content_type.content_type_name == "Quotes" %}
+
+              <blockquote class="blockquote ">
+                <p>{{content.content_content.html|safe}}</p>
+                <footer class="bg-warning"> <cite title="Source title"> Source:{{content.extra_info}}</cite> </footer>
+              </blockquote>
+      
+          
+          
+          {% else %}
+
+          {{content.content_content.html|safe}}
+
+          
+          
+          {% endif %}
+         
+          
+             {% if content.extra_info and content.content_type.content_type_name == "riddles" %}
+             
+             
+             
+              <!-- answer -->
+              <div class="mb-3">
+
+                <div id="accordion">
+                  <div class="card">
+                    <div class="card-header" id="headingOne">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Answer
+                        </button>
+                      </h5>
+                    </div>
+                
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                      <div class="card-body">
+                        {{content.extra_info}}
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+                
+                  <div >
+
+                
+
+
+                     </div>
+                </div>
+              
+                  
+              </div>
+        
+             
+             
+             
+             
+             
+             
+             
+             {% endif %}
+
+  
+          <!-- tags -->
+          <div class="mb-3">
+            <h5 class="d-inline-block mr-3">Tags:</h5>
+            <ul class="list-inline d-inline-block">
+               
+
+                <li class="list-inline-item"><a href="{% url 'kidstore:kids-corner-content-view' content.content_type.content_type_id %}" class="badge badge-warning">{{content.content_type.content_type_name|capfirst}}</a></li>
+              
+                
+             
+               </ul>
+          </div>
+          <!-- share -->
+          <div class="mb-5">
+            <h5 class="d-inline-block mr-3">Share:</h5>
+            <ul class="list-inline d-inline-block">
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-facebook"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-twitter"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-linkedin"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-google"></i></a></li>
+            </ul>
+          </div>
+  
+         
+      
+         
+        </div>
+         <!-- sidebar -->
+        {% block aside %}
+        
+        {% include "content-aside.html" %}
+        
+        {% endblock aside %}
+
+
+
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+{% endblock content %}
+
+
+
+

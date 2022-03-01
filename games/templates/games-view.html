@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+
+
+
+<div class="section">
+ <div class="container col-12">
+
+
+  <div class="row d-lg-none d-md-block d-sm-block col-12">
+    <div class="filter m-5 w-100"> <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#mobile-filter" aria-expanded="true" aria-controls="mobile-filter">Filters<span class="fa fa-filter pl-1"></span></button>
+    </div>
+    <div id="mobile-filter ">
+        
+        <div class="border-bottom pb-2 ml-2">
+            <h4 id="burgundy">Filters</h4>
+        </div>
+        <div class="py-2 border-bottom ml-3">
+          
+            <div id="orange"><span class="fa fa-minus"></span></div>
+
+            <form method="get">
+              <div class="well">
+                
+                <div class="row">
+                  <div class="form-group col-sm-4 col-md-3">
+                    {{ filter_form.update_title.label_tag }}
+                    {% render_field filter_form.update_title class="form-control" %}
+                  </div>
+                  
+                  
+                  <div class="form-group col-sm-4 col-md-3">
+                    {{ filter_form.created_at.label_tag }}
+                    {% render_field filter_form.created_at class="form-control" %}
+                  </div>
+                 
+
+
+
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-search"></span> Search
+                </button>
+              </div>
+            </form>
+     
+        </div>
+      
+       
+    </div> 
+    
+  
+  </div>
+
+
+    <div class="col-12">
+          
+        <div class="card-header card-details-header text-center">
+          <h3> {{game.game_name|capfirst}}  </h3>
+       </div>
+
+
+
+       
+    
+          
+    
+     
+    
+
+    <div class="row">
+      <aside class=" d-none box-shadow-aside  d-sm-none d-md-none col-3  mb-3 d-lg-inline-block  bg-white rounded   order-0 order-lg-0 p-5" >
+          <div class="py-2 border-bottom box-shadow-aside  ml-3">
+            <h6 class="font-weight-bold">Filter</h6>
+            <div id="orange"><span class="fa fa-minus"></span></div>
+
+
+
+            <form method="get">
+              <div class="well">
+                
+                <div class="row">
+                  <div class="form-group col-10">
+                    {{ filter_form.update_title.label_tag }}
+                    {% render_field filter_form.update_title class="form-control" %}
+                  </div>
+                  
+                  
+                  <div class="form-group col-10">
+                    {{ filter_form.created_at.label_tag }}
+                    {% render_field filter_form.created_at class="form-control" %}
+                  </div>
+                 
+
+
+
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-search"></span> Search
+                </button>
+              </div>
+            </form>
+          </div>
+         <div class="bg-white px-4 py-5 box-shadow-aside mb-2">
+           <h4 class="mb-4 aside-head">Category</h4>
+           <ul class="list-styled style-circle">
+             {% for category  in categories %}
+             <li class="border-bottom border-top border-color border-warning"><a href="{%  url 'games:game-updates' category.game.game_id category.update_type_id  %}" class="text-color d-block pb-3 mt-3 text-decoration-none">
+               {{category.update_type_name}}</a></li>
+               {% endfor %}
+              </ul>
+        </div>
+      </aside>
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          <div class="col-lg-9  col-md-12 col-sm-12  mb-3 box-shadow-aside ">
+            
+            
+           
+            <div class="container">
+
+
+              <div class="row">
+                <div class="col-12">
+
+
+
+                  <div class="position-relative mb-5">
+                    <img src="{{game.game_cover.url}}" alt="post thumb" class="img-fluid w-100 ">
+                    <div class="card-type hover-ripple">{{game.game_name}}</div>
+                  </div>
+        
+                  
+        
+                  
+                      {{game.game_description.html|safe}}
+                
+          
+                  <!-- tags -->
+                  <div class="mb-3">
+                    <h5 class="d-inline-block mr-3">Important Links:</h5>
+                    <ul class="list-inline d-inline-block">
+                        
+        
+                        <li class="list-inline-item"><a class="badge badge-info" href="{{game.game_landing_page_link}}" >Official-Link</a></li>
+                        <li class="list-inline-item"><a class="badge badge-danger" href="{{game.play_link}}" >Play-Link</a></li>
+                      
+                       
+                       </ul>
+                  </div>
+                  
+              
+          
+                 
+
+
+
+
+
+
+
+                  
+               
+                  <!-- breadcrumb -->
+            
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              
+              <div class="col-12 text-center">
+                <h3 class="mb-2 mt-2  bd "> Recent Updates </h3>
+            </div>
+
+            {% if updates %}
+
+
+              
+              
+              
+              <div class="d-flex flex-row">
+                  
+        
+                    <div class="text-muted m-2" id="res">Showing {{updates.page_count}} results</div>
+                    
+                </div>
+
+
+
+
+
+                <div class="row">
+                   <div class="col-12 d-lg-flex  d-md-flex ">
+                        
+                    {% for update in  updates %}
+                    <div class="col-sm-4 mb-4">
+                      <article class="card card-details mt-2 mb-2  rounded-10 position-relative box-shadow zindex-1">
+                        <div class="card-type">{{update.update_type.update_type_name}}</div>
+                        <img class="card-img-top rounded-top-0 clip-half-cycle" height="250px" src="{{update.update_thumbnail.url}}" alt="blog-thumb">
+                        <div class="card-body blog-card-body" style="background-color:white;">
+                          <div class="title-border-left">
+                            <div class="card-meta text-uppercase mb-2">by <strong class="text-dark">admin</strong>/ on <strong class="text-dark">{{post.created_at|date:"j M,o"}}</strong></div>
+                            <h4 class="card-title"><a href="{{update.get_absolute_url}}" class="text-dark">{{update.update_title|capfirst}}</a></h4>
+                          </div>
+                          <p class="card-text">{{update.update_description.html|truncatewords_html:20|safe}}</p>
+                          <a href="{{update.get_absolute_url}}" class="btn btn-secondary w-100">read more</a>
+                        </div>
+                      </article>
+                    </div>
+                    
+                  
+
+
+
+                    {% endfor %}
+        
+        
+                          
+                          
+                        
+                    </div>
+                
+                
+                
+                
+                
+                
+                </div>
+
+
+                {% if updates.has_other_pages %}
+
+                <nav aria-label="Page navigation example">
+              
+              
+                <ul class="pagination justify-content-first">
+              
+                  {% if updates.has_previous %}
+                  
+                    <li class="page-item"><a class="page-link" href="?page={{ updates.previous_page_number }}">&laquo; previous</a></li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                  </li>
+                  {% endif %}
+                  {% for i in updates.paginator.page_range %}
+                    {% if updates.number == i %}
+                      <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if updates.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ updates.next_page_number }}">Next &raquo;</a></li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Next</a>
+                  </li>
+                    
+                  {% endif %}
+                </ul>
+              
+              </nav>
+              {% endif %}
+            </div>
+
+
+            {% else %}
+
+            <div class="container-fluid mt-100 ">
+              <div class="row">
+                  <div class="col-md-12 mb-12">
+                      <div class="card">
+                          <div class="card-header">
+                           
+                          </div>
+                          <div class="card-body cart">
+                              <div class="col-sm-12 empty-cart-cls text-center"> <img src="{% static 'images/empty.png' %}" width="130" height="130" class="img-fluid mb-4 mr-3">
+                                  <h3><strong>No Records Found</strong></h3>
+                                      </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        
+            
+            {% endif %}
+            
+        
+        
+        </div>
+      
+        
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+{% endblock %}     
+

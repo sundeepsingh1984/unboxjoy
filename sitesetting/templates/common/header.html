@@ -1,0 +1,156 @@
+{% load static %}
+
+<div class="topbar fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="topsocial">
+                    <ul>
+                        {% for link in request.social_links  %}
+                        <li><a href="{{link.url}}" target="_blank"><img src="{{MEDIA_URL}}{{link.icon.url}}" alt="social-image" /></a></li>
+                        {% endfor %}                         
+               
+
+
+                      
+                         </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light">
+    <div class="container">
+                   
+            
+        <a class="navbar-brand" href="{% url 'index' %}"><img  class="img-fluid" src="{{request.site_info.site_logo.url}}" alt="Site-
+            Logo"></a>
+      
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <ul class="nav navbar-nav mr-0">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">
+                Giveaway <img src="{%static 'images/arrow-down.png' %}">
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for menu in request.giveaway_menu  %}
+                                        
+                <a class="dropdown-item" href="{% url 'giveaways:giveaway-by-category' menu.gawy_cat_id %}">{{menu.cat_name|capfirst}}</a>
+                
+                {% endfor %}
+               
+            
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            
+            {% for game in  request.games_menu %}
+        
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLG" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{game.game_name|capfirst}}
+
+                    <img src="{%static 'images/arrow-down.png' %}">
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownLG">
+            
+            
+                {% for content_type in game.gameupdatetype_set.all %}
+                
+                <a class="dropdown-item" href="{% url 'games:game-updates' game.game_id content_type.update_type_id %}">{{content_type.update_type_name|capfirst}}</a>
+                    
+                   
+                {% endfor %}
+                </div>
+                </li>
+            
+
+            {% endfor %}
+  
+          </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLG" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Kids Corner
+                <img src="{%static 'images/arrow-down.png' %}">
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownLG">
+
+      
+                            
+                <a class="dropdown-item" href="{% url 'kidstore:kids-store' %}">Kids Store</a>
+                {% if request.kids_corner %}
+                
+                {% for kids_menu in request.kids_corner %}
+                
+
+                <a class="dropdown-item" href="{% url 'kidstore:kids-corner-content-view' kids_menu.content_type_id %}">{{kids_menu.content_type_name|capfirst}}</a>
+                
+                
+                {% endfor %}
+                
+                
+                {% endif %}
+               
+             </div>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLG" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Blogs
+                <img src="{%static 'images/arrow-down.png' %}">
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownLG">
+
+                {% for blg_itm in request.blog_menu %}
+                            
+                <a class="dropdown-item" href="{% url 'blogs:blogs-by-category' blg_itm.category_id%}">{{blg_itm.category_name}}</a>  
+                
+                {% endfor %}
+               
+             </div>
+        </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

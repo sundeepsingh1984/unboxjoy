@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+
+
+
+<div class="section">
+ <div class="container col-12">
+
+
+    <div class="col-12">
+          
+        <div class="card-header card-details-header text-center">
+          <h3> Kid's Store  </h3>
+       </div>
+
+
+  <div class="row d-lg-none d-md-block d-sm-block col-12">
+    <div class="filter m-5 w-100"> <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#mobile-filter" aria-expanded="true" aria-controls="mobile-filter">Filters<span class="fa fa-filter pl-1"></span></button>
+    </div>
+    <div id="mobile-filter ">
+        
+        <div class="border-bottom pb-2 ml-2">
+            <h4 id="burgundy">Filters</h4>
+        </div>
+        <div class="py-2 border-bottom ml-3">
+            <h6 class="font-weight-bold">Categories</h6>
+            <div id="orange"><span class="fa fa-minus"></span></div>
+            <form  method="post" action="{% url 'kidstore:kids-store-filtered' %}">
+                {% csrf_token %}
+                {% for category in categories  %}
+
+                {% if not filter_by %}
+                
+                <div class="form-group"> <input type="checkbox" name="category" id="{{category.store_cat_id}}"  value=id="{{category.store_cat_id}}" checked="checked"> <label for="{{category.store_cat_id}}">{{category.cat_name}}</label> </div>
+
+
+                {% else %}
+
+                {% if category.store_cat_id in filter_by  %}
+
+                <div class="form-group"> <input value="{{category.store_cat_id}}" type="checkbox" name="category" id="{{category.store_cat_id}}" checked="checked"> <label for="{{category.store_cat_id}}">{{category.cat_name}}</label> </div>
+
+                {%else%}
+
+                <div class="form-group"> <input value="{{category.store_cat_id}}" type="checkbox" name="category" id="{{category.store_cat_id}}"> <label for="{{category.store_cat_id}}">{{category.cat_name}}</label> </div>
+
+
+
+                
+                
+                
+                {% endif %}
+
+
+                
+
+
+               
+
+
+
+
+                {% endif %}
+                
+                
+                
+                {% endfor %}
+
+                
+                <button type="submit" class="btn btn-primary">Filter</button>
+            
+            
+            </form>
+        </div>
+      
+       
+    </div> 
+    </div>
+
+    
+       
+    
+          
+    
+     
+    
+
+    <div class="row">
+        <aside class=" d-none box-shadow-aside  d-sm-none d-md-none col-3  mb-3 d-lg-inline-block  bg-white rounded   order-0 order-lg-0 p-5" >
+        
+            <div class="border-bottom pb-2 ml-2">
+                <h4 >Filters</h4>
+            </div>
+            <div class="py-2 border-bottom ml-3">
+                <h6 class="font-weight-bold">Categories</h6>
+                <div id="orange"><span class="fa fa-minus"></span></div>
+                <form  method="POST" action="{% url 'kidstore:kids-store-filtered' %}">
+                    {% csrf_token %}
+                    {% for category in categories  %}
+
+                    {% if not filter_by %}
+                    
+                    <div class="form-group"> <input value="{{category.store_cat_id}}" type="checkbox" name="category" id="{{category.store_cat_id}}" checked="checked"> <label for="{{category.store_cat_id}}">{{category.cat_name}}</label> </div>
+
+
+                    {% else %}
+           
+
+                    {% if category.store_cat_id in filter_by  %}
+
+                    <div class="form-group"> <input value="{{category.store_cat_id}}" type="checkbox" name="category" id="{{category.store_cat_id}}" checked="checked"> <label for="{{category.store_cat_id}}">{{category.cat_name}}</label> </div>
+
+                    {%else%}
+
+                    <div class="form-group"> <input value="{{category.store_cat_id}}" type="checkbox" name="category" id="{{category.store_cat_id}}"> <label for="{{category.store_cat_id}}">{{category.cat_name}}</label> </div>
+
+
+
+                    
+                    
+                    
+                    {% endif %}
+
+
+                    
+
+
+                   
+
+
+
+
+                    {% endif %}
+                    
+                    
+                    
+                    {% endfor %}
+
+                    
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                
+                
+                </form>
+            </div>
+          
+        </aside>
+
+
+        <div class="col-lg-9  col-md-12 col-sm-12  mb-3 box-shadow-aside ">
+            
+            
+            {% if products %}
+            <div class="container">
+                <div class="d-flex flex-row">
+                    <div class="text-muted m-2" id="res">Showing {{page_count}} results</div>
+                    
+                </div>
+                <div class="row">
+                   <div class="col-12 d-lg-flex  d-md-flex ">
+                        
+                    {% for product in  products %}
+                    
+                    {% if product.product_embed_type == "url-embed" %}
+                    <div class="card d-relative col-sm-12  mb-3 col-md-6 col-lg-4"> 
+                          <div class="embed-responsive embed-responsive-4by3">
+                      <iframe class="embed-responsive-item" src="{{product.product_url}}"></iframe>
+                      </div>
+
+                    </div>
+
+                    {%else%}
+
+                    <div class="card d-relative  col-sm-12 mb-3 col-md-6 col-lg-4"> 
+                        <div class="embed-responsive embed-responsive-4by3">
+                       {{product.product_embeded_code|safe}}
+                        </div>
+
+                    </div>
+
+
+
+
+
+                    {% endif %}
+
+                    {% endfor %}
+        
+        
+                          
+                          
+                        
+                    </div>
+                
+                
+                
+                
+                
+                
+                </div>
+
+
+                {% if products.has_other_pages %}
+
+                <nav aria-label="Page navigation example">
+              
+              
+                <ul class="pagination justify-content-first">
+              
+                  {% if products.has_previous %}
+                  
+                    <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">&laquo; previous</a></li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                  </li>
+                  {% endif %}
+                  {% for i in products.paginator.page_range %}
+                    {% if products.number == i %}
+                      <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if products.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next &raquo;</a></li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Next</a>
+                  </li>
+                    
+                  {% endif %}
+                </ul>
+              
+              </nav>
+              {% endif %}
+            </div>
+
+
+            {% else %}
+
+            <div class="container-fluid mt-100 ">
+              <div class="row">
+                  <div class="col-md-12 mb-12">
+                      <div class="card">
+                          <div class="card-header">
+                           
+                          </div>
+                          <div class="card-body cart">
+                              <div class="col-sm-12 empty-cart-cls text-center"> <img src="{% static 'images/empty.png' %}" width="130" height="130" class="img-fluid mb-4 mr-3">
+                                  <h3><strong>No Records Found</strong></h3>
+                                      </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        
+            
+            {% endif %}
+            
+        
+        
+        </div>
+      
+        
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+      
+
+
+
+<!-- products section -->
+
+    
+
+{% comment %} </div> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}

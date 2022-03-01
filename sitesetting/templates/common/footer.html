@@ -1,0 +1,84 @@
+<section class="subfooter">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <img src="images/footerlogo.png" alt="">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 footer-social">
+                <div class="topsocial">
+                    <ul>
+                        {% for link in request.social_links  %}
+                        <li><a href="{{link.url}}" target="_blank"><img src="{{MEDIA_URL}}{{link.icon.url}}" alt="Facebook" /></a></li>
+                        {% endfor %}                         
+                    </ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 footpadd">
+                <div class="contact-details">
+                    <div class="heading">Want to connect with us ?</div>
+                    <p>We are happy to hear you <a href="mailto:support@unboxjoy.com" style="color:#fedd0d;">support@unboxjoy.com</a></p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 footpadd">
+                <div class="contact-details">
+                    <div class="heading">Useful Links</div>
+                    <div class="quicklinks">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 footpadd">
+                <div class="contact-details">
+                    <div class="heading">Games</div>
+                    <div class="quicklinks">
+                        <ul>
+                            <li><a href="#">PK XD</a></li>
+                            <li><a href="#">Play Together</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 footpadd">
+                <div class="contact-details">
+                    <div class="heading">Newsletter</div>
+                    <p>Get our latest updates</p>
+                    <form action="">
+                        <input type="text" id="name" name="name" placeholder="Insert your e-mail id here">
+                        <div class="btnbox">
+                            <a href="#" id="myBtn2" class="btn btn-primary">Subscribe</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            
+            
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="copyright">
+                    <p>Copyright 2022. UnboxJoy. All Rights Reserved</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="text-right">
+                    <p>Designed and developed by AnsGenix IT Solutions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

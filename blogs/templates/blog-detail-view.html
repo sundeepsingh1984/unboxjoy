@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- page title -->
+{% block content %}
+
+
+
+<section class="section bg-cover overlay" data-background="{{blog_details.blog_cover_img}}">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          
+          <div class="card-header card-details-header text-center">
+            <h3> Blog Details  </h3>
+         </div>
+          <!-- breadcrumb -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0">
+              <li class="breadcrumb-item font-weight-semebold"><a  href="{% url 'index' %}" >Home</a></li>
+              <li class="breadcrumb-item font-weight-semebold active text-primary" aria-current="page">Blog Details</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /page title -->
+  
+  <!-- blog details -->
+  <section class="section">
+    <div class="container">
+      <div class="row ">
+        <div class="col-lg-8">
+          <!-- post thumb -->
+          <div class="position-relative mb-5">
+            <img src="{{blog_details.background_img.url}}" alt="post thumb" class="img-fluid w-100 ">
+            <div class="card-type hover-ripple">{{blog_details.blog_category.category_name}}</div>
+          </div>
+
+          <h2> {{blog_details.blog_title}}    </h2>
+
+
+          <div class="card-meta text-uppercase mb-2">by <strong class="text-dark">admin</strong>/ on <strong class="text-dark"> {{blog_details.created_at|date:"j M,o"}}</strong></div>
+         
+              {{blog_details.blog_content.html|safe}}
+        
+  
+          <!-- tags -->
+          <div class="mb-3">
+            <h5 class="d-inline-block mr-3">Tags:</h5>
+            <ul class="list-inline d-inline-block">
+                {% for tag in tags %}
+
+                <li class="list-inline-item"><a href="{% url 'blogs:blogs-by-sub-category' tag.cat_id.category_id tag.sub_cat_id %}" class="badge badge-warning">{{tag.sub_cat_name|capfirst}}</a></li>
+              
+                
+                {% endfor %}
+               </ul>
+          </div>
+          <!-- share -->
+          <div class="mb-5">
+            <h5 class="d-inline-block mr-3">Share:</h5>
+            <ul class="list-inline d-inline-block">
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-facebook"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-twitter"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-linkedin"></i></a></li>
+              <li class="list-inline-item"><a class="text-color" href="#"><i class="fa fa-google"></i></a></li>
+            </ul>
+          </div>
+  
+         
+      
+         
+        </div>
+        <!-- sidebar -->
+        {% block aside %}
+        
+        {% include "aside.html" %}
+        
+        {% endblock aside %}
+
+
+
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+{% endblock content %}
+
+
+
+
+
+  <!-- /blog details -->
+  

@@ -1,0 +1,103 @@
+{% block aside %}
+
+
+<aside class="mb-5 bg-white rounded   col-lg-4 order-2 order-lg-2 p-3">
+   
+
+    {% if latest_updates %}
+    
+    <div class="bg-white  py-5 box-shadow-aside mb-5">
+      <h4 class="mb-4 aside-head">Recent Activity</h4>
+
+      {% for update in latest_updates  %}
+      {% if forloop.last %}
+      <div class="media">
+        <img class="mr-3 img-thumb-side" src="{{update.update_thumbnail.url}}" alt="post-thumb">
+        <div class="media-body">
+          <h5 class="mt-0"><a href="{{update.get_absolute_url}}" class="ext-dark">{{update.update_title|capfirst}}</a></h5>
+          <strong class="ml-2"> By Admin  </strong>  {{update.created_at|date:"j M,o"}}
+        
+          <div class="media-body">
+            <a href="{{update.get_absolute_url}}" class=" mt-0 btn btn-side  ">Read</a>
+            </div>
+        
+        </div>
+
+
+      </div>
+
+     
+        {% else %}
+      <div class="media border-bottom border-color  mb-3">
+        <img class="mr-3 img-thumb-side" src="{{update.update_thumbnail.url}}" alt="post-thumb">
+        <div class="media-body">
+          <h5 class="mt-0"><a href="{{update.get_absolute_url}}" class="ext-dark">{{update.content_title|capfirst}}</a></h5>
+          <strong class="ml-2"> By Admin  </strong>  {{update.created_at|date:"j M,o"}}
+      
+
+          <div class="media-body">
+            <a href="{{update.get_absolute_url}}" class=" mt-0 btn btn-side  ">Read</a>
+          </div>
+        
+
+
+
+        </div>
+
+        </div>{% endif %}{% endfor %}
+
+
+
+
+    </div>
+
+    {% endif %}
+
+
+
+    <div class="bg-white px-4 py-5 box-shadow-aside mb-2">
+      <h4 class="mb-4 aside-head">Category</h4>
+      <ul class="list-styled style-circle">
+
+        {% for category  in categories %}
+        <li class="border-bottom border-top border-color border-warning"><a href="{%  url 'games:game-updates' category.game.game_id category.update_type_id  %}" class="text-color d-block pb-3 mt-3 text-decoration-none">
+            {{category.update_type_name}}</a></li>
+      
+        
+        
+        {% endfor %}
+        </ul>
+    </div>
+
+    
+
+</aside>
+
+
+
+
+{% endblock aside %}
+
+
+
+
+
+
+        
+ 
+
+
+
+
+
+
+
+
+
+
+     
+        
+
+
+          
+
