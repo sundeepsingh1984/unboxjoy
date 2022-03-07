@@ -8,6 +8,10 @@
     border-radius: 10px;
 }
 
+.sectiontop {
+    margin-top: 180px;
+}
+
 .side-quote {
     border-left: 5px solid #0abbff;
     text-align: center;
@@ -62,7 +66,7 @@ a {
 }
 
 .card-details-header {
-    background: radial-gradient(circle, rgba(255, 221, 9, 1) 0%, rgba(67, 206, 235, 1) 100%);
+    background: radial-gradient(circle, rgba(67, 205, 235, 1) 0%, rgba(67, 206, 235, 1) 100%);
 }
 
 .blog-card-body {
@@ -370,7 +374,7 @@ body {
     width: 100%;
 }
 
-.modal-content input[type=text],
+.modal-content input[type=email],
 textarea {
     border-radius: 20px;
     padding: 15px;

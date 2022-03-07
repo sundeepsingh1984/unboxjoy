@@ -17,6 +17,18 @@ class GiveawayCategory(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+
+
+class WinnerManager(models.Manager):
+    def get_winners(self):
+        return self.filter(winner='True')
+ 
+
+
+
+
+
+
 # GiveAway Model
 class Giveaway(models.Model):
     giveaway_id = models.AutoField(primary_key=True)
@@ -27,25 +39,26 @@ class Giveaway(models.Model):
     result_announcement_date=models.DateTimeField(blank=False,null=True)
     result_announced=models.BooleanField(default=False)
     total_winners=models.IntegerField(blank=False,null=False)
+    redirect_url=models.URLField(blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    
+
+
+    
+    def __str__(self):
+        return f'{self.giveaway_title}({self.giveaway_id})'
+
+
+
     def get_absolute_url(self):
         return reverse("giveaways:giveaway-detail", kwargs={"gawy_id": self.giveaway_id})
+        
     
 
 
 
-# VideoGiveAway Model
-class VideoGiveAway(models.Model):
-    video_giveaway_id = models.AutoField(primary_key=True)
-    giveaway_cat = models.ForeignKey(GiveawayCategory,on_delete=models.CASCADE)
-    giveaway_title=models.CharField(max_length=200,blank=True,null=True)
-    last_apply_date=models.DateTimeField(blank=True,null=True)
-    result_announced=models.BooleanField(default=False)
-    total_winners=models.IntegerField(blank=False,null=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
 class Player(models.Model):
     player_id=models.CharField(max_length=100,blank=False,null=False,unique=True)
@@ -58,6 +71,15 @@ class Player(models.Model):
     address=models.TextField(blank="False",null="False")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    winners=WinnerManager()
+    
+
+    
+    def __str__(self):
+        return f'{self.name}({self.player_id})'
+
+
+       
 
 class GiveawayRegistration(models.Model):
     reg_id=models.AutoField(primary_key=True)
@@ -66,6 +88,14 @@ class GiveawayRegistration(models.Model):
     winner=models.BooleanField(default=False,blank="False",null="False")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    winners=WinnerManager()
+    
+    def __str__(self):
+        return f'{self.player.name}({self.reg_id})'
+
+    
+
+
 
 
 
@@ -75,6 +105,13 @@ class Winners(models.Model):
     winner=models.ForeignKey(Player,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f'{self.winner.name}({self.id})'
+
+
+    class Meta:
+        unique_together = ('giveaway', 'winner')
 
 
 

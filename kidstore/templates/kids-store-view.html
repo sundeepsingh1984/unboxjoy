@@ -4,11 +4,26 @@
 
 {% block content %}
 
+{% if banner %}
+
+{% block banner %}
+
+{% include "common/banner.html" %}
+
+
+{% endblock banner %}
 
 
 
 
-<div class="section">
+
+
+
+{% endif %}
+
+
+
+<div class="section mt-5">
  <div class="container col-12">
 
 

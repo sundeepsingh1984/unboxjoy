@@ -1,4 +1,4 @@
-
+from sitesetting.shortcuts import get_banner_by_name
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 from .models import *
@@ -27,7 +27,6 @@ def kids_store_view(request):
 
 
     except Exception as e:
-        raise e
         raise Http404("There is Some Error fetching products.Please Try again after a while")
 
 
@@ -45,8 +44,10 @@ def kids_store_view(request):
     
         
     # sending the page object to pages
+
+    banner=get_banner_by_name("kidstore-banner")
     
-    return render(request,"kids-store-view.html",{"products":page_obj,"categories":category_query_set,"page_count":page_obj.count})
+    return render(request,"kids-store-view.html",{"products":page_obj,"categories":category_query_set,"page_count":page_obj.count ,"banner":banner})
 
 
 
@@ -135,10 +136,12 @@ def kids_corner_content_view(request,category_id):
     except EmptyPage:
         # if page is empty then return last page
         page_obj = page_obj.page(page_obj.num_pages)
+
+    banner=get_banner_by_name("kidcontent-banner")
     
         
     # sending the page object to pages
-    return render(request,"content-view.html",{"content_list":page_obj,"filter_form":filtered_qs.form,"quote_of_day":latest_quote})
+    return render(request,"content-view.html",{"content_list":page_obj,"filter_form":filtered_qs.form,"quote_of_day":latest_quote,"banner":banner})
 
 
 

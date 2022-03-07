@@ -9,10 +9,20 @@ class BlogCatagory(models.Model):
     category_id=models.AutoField(primary_key=True)
     category_name=models.CharField(max_length=50,null=False,blank=False)
 
+    
+    def __str__(self):
+        return f'{self.category_name}({self.category_id})'
+
+
 class BlogSubCategory(models.Model):
     sub_cat_id=models.AutoField(primary_key=True)
     cat_id=models.ForeignKey(BlogCatagory,on_delete=models.CASCADE)
     sub_cat_name=models.CharField(max_length=200)
+    
+    def __str__(self):
+        return f'{self.sub_cat_name}({self.sub_cat_id})'
+
+
 
 
     
@@ -29,6 +39,9 @@ class Blog(models.Model):
     public=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.blog_title}({self.blog_id})'
 
     def get_absolute_url(self):
         return reverse("blogs:blog-details", kwargs={"id": self.blog_id})

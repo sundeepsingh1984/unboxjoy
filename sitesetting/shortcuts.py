@@ -1,6 +1,7 @@
 
 from ast import Pass
 from django.http import Http404
+from .forms import SubscribeForm
 from .models import *
 from django.shortcuts import get_object_or_404
 from games.models import Games
@@ -83,7 +84,7 @@ def divide_chunks(l, n):
 def get_banner_by_name(name):
 
     try:
-        banner=Banner.objects.filter(banner_name=name ,activate="True").get()
+        banner=Banner.objects.filter(banner_name__istartswith=name ,activate="True").get()
 
     except Banner.DoesNotExist as e:
         banner=Banner.objects.filter(activate="True").all()[0]
@@ -104,3 +105,28 @@ def get_kids_content_category(request):
     except Exception as e:
 
         raise Http404("there is some issue fetching kids content")
+
+
+
+def get_business_info(request):
+    try:
+        business_info=BusinessInfo.objects.first()
+
+        return business_info
+
+    except Exception as e:
+
+        raise Http404("there is some issue fetching kids content")
+
+def get_important_links(request):
+    try:
+        links=ImportantLink.objects.all()
+        return links
+
+    except Exception as e:
+        raise Http404("there is some issue fetching kids content")
+
+
+def get_subscribtion_form(request):
+
+    return SubscribeForm

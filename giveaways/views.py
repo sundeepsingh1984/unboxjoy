@@ -2,7 +2,7 @@ from email import message
 from email.policy import HTTP
 from django.urls import reverse
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Giveaway, GiveawayRegistration, Player
 from django.utils import timezone
 from .shortcuts import divide_chunks
@@ -20,7 +20,7 @@ def giveaway_catogorical_view(request,cat_id):
         announced_giveaways=Giveaway.objects.filter( giveaway_cat=cat_id,result_announced = True).order_by('last_apply_date').all()[:12]
         active_give_aways=list(divide_chunks(active_give_aways,3))
         announced_giveaways=list(divide_chunks(announced_giveaways,3))
-        banner=get_banner_by_name("giveawaybanner")
+        banner=get_banner_by_name("giveaway-banner")
 
   
         return render(request,'giveaway-view.html',{"active_giveaways":active_give_aways,"announced_giveaways":announced_giveaways,"banner":banner})
@@ -50,11 +50,20 @@ def verify_and_register_player(request):
             else:
 
                 try:
-                    
-                    reg_obj=GiveawayRegistration(giveaway_id=Giveaway.objects.get(giveaway_id=request.POST.get("g_id")),player=player_obj)
+
+                    giveaway_obj=Giveaway.objects.get(giveaway_id=request.POST.get("g_id"))
+                    reg_obj=GiveawayRegistration(giveaway_id=giveaway_obj.giveaway_id,player=player_obj)
                     reg_obj.save()
                     messages.add_message(request,messages.SUCCESS,"Thanks for Enrolling into Giveaway.You will get Notified for the results.")
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                    
+                    g_type=str(giveaway_obj.giveaway_cat.cat_name).lower()
+                    
+                    if g_type == "video giveaway":
+
+                       return redirect(giveaway_obj.redirect_url)
+
+                    else:    
+                        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
                    
 
@@ -90,10 +99,17 @@ def register_player(request):
                 try:
                     giveaway_obj=Giveaway.objects.get(giveaway_id=int(g_id))
                     player_obj=Player.objects.get(player_id=p_id)
-                    reg = GiveawayRegistration(giveaway_id=giveaway_obj,player=player_obj)
+                    reg = GiveawayRegistration(giveaway_id=int(g_id),player=player_obj)
                     messages.add_message(request,messages.SUCCESS,"Registerd for Giveaway SucessFully.")
                     reg.save()
-                    return HttpResponseRedirect(reverse("giveaways:giveaway-detail",args=(g_id,)))
+                    g_type=str(giveaway_obj.giveaway_cat.cat_name).lower()
+                    if g_type == "video giveaway":
+
+                       return redirect(giveaway_obj.redirect_url)
+
+                    else:    
+                        return HttpResponseRedirect(reverse("giveaways:giveaway-detail",args=(g_id,)))
+                    
                     
                    
                 except Exception as e:
@@ -101,7 +117,7 @@ def register_player(request):
        
             else:
 
-                return HttpResponseRedirect(reverse("sitesetting:giveaway-detail"))     
+                return HttpResponseRedirect(reverse("index"))     
 
 
         else:

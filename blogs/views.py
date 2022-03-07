@@ -2,7 +2,7 @@ from sre_parse import CATEGORIES
 from unicodedata import category
 from webbrowser import get
 from django.shortcuts import render,get_object_or_404
-
+from sitesetting.shortcuts import get_banner_by_name
 from.models import Blog,BlogCatagory,BlogSubCategory
 from django.core.paginator import Paginator
 from django.http import Http404
@@ -45,8 +45,9 @@ def blogs_categorical_view(request,cat_id):
     trending_blogs=Blog.objects.filter(trending="True",public="True").all()[:3]
 
     latest_blogs=Blog.objects.order_by("-created_at").filter(public="True").all()[:3]
-        
-    return render(request, 'blog-view.html', {'page_obj': page_obj,"latest_blogs":latest_blogs,"trending_blogs":trending_blogs,"categories":categories,"tags":sub_categories})
+
+    banner=get_banner_by_name("blog-banner")   
+    return render(request, 'blog-view.html', {"banner":banner,'page_obj': page_obj,"latest_blogs":latest_blogs,"trending_blogs":trending_blogs,"categories":categories,"tags":sub_categories})
   
 
 
@@ -92,8 +93,8 @@ def blogs_subcategorical_view(request,cat_id,sub_cat_id):
     trending_blogs=Blog.objects.filter(trending="True",public="True").all()[:3]
 
     latest_blogs=Blog.objects.order_by("-created_at").filter(public="True").all()[:3]
-        
-    return render(request, 'blog-view.html', {'page_obj': page_obj,"latest_blogs":latest_blogs,"trending_blogs":trending_blogs,"categories":categories,"tags":sub_categories})
+    banner=get_banner_by_name("blog-banner")      
+    return render(request, 'blog-view.html', {'page_obj': page_obj,"latest_blogs":latest_blogs,"trending_blogs":trending_blogs,"categories":categories,"tags":sub_categories,"banner":banner})
   
 
 

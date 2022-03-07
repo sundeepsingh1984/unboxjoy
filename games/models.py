@@ -20,6 +20,12 @@ class Games(models.Model):
     game_cover=models.ImageField(upload_to="games/images")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+    
+    def __str__(self):
+        return f'{self.game_name}({self.game_id})'
+
+
   
 
 class GameUpdateType(models.Model):
@@ -29,6 +35,12 @@ class GameUpdateType(models.Model):
     game=models.ForeignKey(Games,on_delete=models.CASCADE)
     #columns
     update_type_name=models.CharField(null=False,blank=False,max_length=100)
+
+    
+    def __str__(self):
+        return f'{self.update_type_name}({self.update_type_id})'
+
+
 
 
 
@@ -47,6 +59,12 @@ class GameUpdates(models.Model):
     update_cover=models.ImageField(upload_to="games/update/images")
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+    
+    def __str__(self):
+        return f'{self.update_title}({self.update_id})'
+
+
 
     def get_absolute_url(self):
         return reverse("games:game-update-details-view", kwargs={"update_id": self.update_id})

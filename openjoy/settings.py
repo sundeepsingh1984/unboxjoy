@@ -25,7 +25,7 @@ SECRET_KEY = 'django-secure-8kjum9)tn1w4*^f4007(kw_o7)d$t9wk*s@v-3w*mrqn=z7j4r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', "ngrok.io"]
 
 
 # Application definition
@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'sitesetting',
     'giveaways',
     'kidstore',
-    'socialfeeds',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,6 +50,7 @@ INSTALLED_APPS = [
     'django_filters',
     'widget_tweaks',
     'django_admin_listfilter_dropdown',
+    "django_cron",
  
     
 ]
@@ -67,6 +67,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'sitesetting.middleware.InformationMiddleware'
 ]
+
+
+CRON_CLASSES = [
+    "sitesetting.cron.SetGiveawayResult",
+    # ...
+]
+
 
 ROOT_URLCONF = 'openjoy.urls'
 

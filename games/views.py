@@ -2,6 +2,8 @@ import imp
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from .models import GameUpdateType, GameUpdates, Games
+from sitesetting.shortcuts import get_banner_by_name
+
 from django.http import Http404
 from .filters import GameUpdateFilter
 from django.core.paginator import Paginator
@@ -33,10 +35,12 @@ def games_content_view(request,game_id,update_type_id):
     except EmptyPage:
         # if page is empty then return last page
         page_obj = page_obj.page(page_obj.num_pages)
-    
+    b_name=game_obj.game_name+"-banner"
+    print(b_name)
+    banner=get_banner_by_name(b_name)
         
     # sending the page object to pages
-    return render(request,"games-view.html",{"updates":page_obj,"filter_form":filtered_qs.form,"categories":categories,"game":game_obj})
+    return render(request,"games-view.html",{"banner":banner,"updates":page_obj,"filter_form":filtered_qs.form,"categories":categories,"game":game_obj})
 
 
 def game_update_details_view(request,update_id):

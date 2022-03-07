@@ -14,11 +14,3 @@ $('#playerverifybtn').click(function(e) {
     $('#player_verify_form').submit();
 
 });
-
-
-
-
-
-$('.timer-span').startTimer({
-    elementContainer: "span"
-});

@@ -15,7 +15,17 @@
 
 {% block content %}
 
-<section class="col-12 mt-2 mb-2 d-flex  align-items-center">
+
+
+
+
+
+
+
+
+
+
+<section class="col-12 mt-2 mb-2 d-flex sectiontop p-lg-5 align-items-center">
 
 <div class=" container col-md-12 p-2">
     <div class="row  w-100">
@@ -105,10 +115,11 @@
 
 
 
-
-
+{% if announced_giveaways %}
 
 <section class="pt-5 pb-5 mt-2 mb-2  ">
+
+
     <div class="container col-12 ">
         <div class="row">
             <div class="col-12 text-center">
@@ -257,6 +268,9 @@
       </div>
     </div>
   </section>
+
+  {% endif %}
+
 
     
 {% endblock content %}

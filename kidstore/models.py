@@ -9,6 +9,11 @@ class KidsContentType(models.Model):
     content_type_id=models.AutoField(primary_key=True)
     content_type_name=models.CharField(max_length=100,blank=False,null=False)
 
+    def __str__(self):
+        return f'{self.content_type_name}({self.content_type_id})'
+
+
+
 class Content(models.Model):
     content_id=models.AutoField(primary_key=True)
     content_thumbnail=models.ImageField(upload_to="kidstore/image/thumbnail")
@@ -20,6 +25,9 @@ class Content(models.Model):
     published=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f'{self.content_title}({self.content_id})'
 
     def get_absolute_url(self):
         return reverse("kidstore:content-details", kwargs={"content_id": self.content_id})
@@ -28,6 +36,13 @@ class Content(models.Model):
 class StoreCatagory(models.Model):
     store_cat_id=models.AutoField(primary_key=True)
     cat_name=models.CharField(max_length=100,blank=False,null=False)
+
+        
+    def __str__(self):
+        return f'{self.cat_name}({self.store_cat_id})'
+
+    
+
 
 Embed_CHOICES=(("url-embed","URL-Embed"),("html-embed","HTML-Embed"))
 
@@ -40,4 +55,9 @@ class AffilatedProducts(models.Model):
     product_embeded_code=models.TextField(blank=True,null=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+    
+    def __str__(self):
+        return f'{self.product_name}({self.product_id})'
+
     

@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from .models import *
 from django.utils.html import format_html
 from django.urls import reverse
+from django.db import IntegrityError
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
 from django.contrib import messages
 
@@ -108,6 +109,8 @@ class GiveawayRegistrationAdmin(admin.ModelAdmin):
                 if int(totalwinner_announced) > int(winner_count):
                     winner_obj=Winners(giveaway=obj.giveaway,winner=obj.player)
                     winner_obj.save()
+                    queryset.update(winner="True")
+           
 
                 else:
                     message_string="{} cannot be added as winner ".format(obj.player.name) 
@@ -115,14 +118,13 @@ class GiveawayRegistrationAdmin(admin.ModelAdmin):
 
 
                 
-            queryset.update(winner="True")
             self.message_user(request,"winners announced succesfully" , messages.SUCCESS)
 
 
-        except Exception as e:
-            
-            self.message_user(request,"OOP's!There was some error performing the action" , messages.ERROR)
-            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        except IntegrityError  as e:
+        
+                self.message_user(request,"winners already announced" , messages.WARNING)
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 
@@ -149,6 +151,7 @@ class GiveawayRegistrationAdmin(admin.ModelAdmin):
 
 
         except Exception as e:   
+            raise e
             self.message_user(request,"OOP's!There was some error performing the action" , messages.ERROR)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 

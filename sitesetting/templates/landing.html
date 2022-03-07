@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
 
-<div class="main-se">
+
 {% block banner  %} 
 
 {% include "./common/banner.html" %}
@@ -19,16 +19,33 @@
                     {{  request.site_info.adsense_code|safe}}
                 </div>
             </div>
+            
             <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="giveaway" style="">
-                    <img src="images/giveaway.png" class="img-fluid" alt="">
-                    <img src="images/arrow-bottom.png" class="img-fluid arrow-bottom" alt="">
+                    <img src="{% static 'images/giveaway.png' %}" class="img-fluid" alt="">
+                    <img src="{% static 'images/arrow-bottom.png' %}" class="img-fluid arrow-bottom" alt="">
 
                     <canvas id="canvas" width="400" height="440" data-responsiveMinWidth="180" data-responsiveScaleHeight="true" data-responsiveMargin="50">
                     </canvas>
+
+                 {% if wheel_data %}
                  
                    <h3 class="text-center timerarea text-white d-flex justify-content-center p-3 " > <div  class="timer d-flex text-center" data-seconds-left="{{time_diff}}"> Giveaway In  &nbsp;   </div> </h3>  
                 </div>
+
+
+                {% else %}
+
+                <h3 class="text-center timerarea text-white d-flex justify-content-center p-3 bg-alert " > <div  class="timer d-flex text-center" data-seconds-left="{{time_diff}}"> No Upcoming Giveaway  </div> </h3>  
+            </div>
+
+
+
+
+
+
+                {% endif %}
+                 
 
 
              
@@ -41,12 +58,17 @@
             </div>
             <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
                 <div class="advertisement">
+
+                    {% for ad in ads  %}
+                    
                     <div class="ad1">
-                        <a href="#"><img src="images/ad1.png" class="img-responsive" alt=""></a>
+                        <a href="{{ad.target_link }}"><img src="{{ad.image.url}}" class="img-responsive" alt=""></a>
                     </div>
-                    <div class="ad2">
-                        <a href="#"><img src="images/ad2.png" class="img-responsive" alt=""></a>
-                    </div>
+                    
+                    
+                    {% endfor %}
+                    
+                    
                 </div>
             </div>
 
@@ -59,12 +81,240 @@
 </section>
 
 
+{% if brand_banner %}
+
+
+    <section class="clients">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="owl-carousel owl-theme">
+
+                        {% for banner in brand_banner  %}
+                        <div class="item">
+                            <img src="{{banner.banner_image.url}}" class="img-responsive" alt="" />
+                        </div>
+                        
+                        
+                        
+                        
+                        {% endfor %}
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="social_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                    <div class="videos">
+                        <div class="heading">YouTube Videos</div>
+
+                        {% for y_feed in youtube_feeds %}
+
+
+                        {% if forloop.first %}
+                        
+                        <div class="video1">
+                            <iframe width="370" height="254" src="{{y_feed.feed_code}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        {% else %}
+                        <div class="video2">
+                            <iframe width="370" height="254" src="{{y_feed.feed_code}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        
+                        
+                        
+                        {% endif %}
+                        
+                        
+                        
+                        
+                        {% endfor %}
+
+
+
+                       
+                    </div>
+                </div>
+                <div class="col col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                    <div class="trending">
+                        <div class="heading">Trending Games</div>
+                        <div class="posts">
+                            
+                            {% for blog in trending_blogs  %}
+                            <div class="single-post w-100">
+                                <div class="post-header">
+                                    <div class="avatar"><img src="{%static 'images/avatar.jpg' %}" alt=""></div>
+                                    <div class="post-title">{{blog.blog_title}}</div>
+                                </div>
+                                <div class="post-content">
+                                    {{blog.blog_content.html|truncatewords_html:50|safe}}
+
+                                </div>
+                                <a href="{{blog.get_absolute_url}}" class=" mt-0 btn btn-side w-100 ">Read</a>
+                               
+                            </div>
+
+                           {% endfor %}
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                    <div class="insta-feed">
+                        <div class="heading">Instagram Posts</div>
+                        
+                        {{instafeed.feedcode|safe}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </section>
 
 
 
 
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block modal %}
+
+
+
+
+
+<div class="modal fade" style="display:none" id="winnermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-body">
+          <h3 class="font-weight-bold">Congratulation!</h3>
+
+          <div class="d-flex">
+          
+          <h4 >
+              <strong id="winnername"></strong>
+
+              for winning giveaway 
+
+          </h4>
+
+        </div>
+        </div>
+        <div class="modal-footer d-block" id="winnerfotter">
+              </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock modal %}
+
+
+
+
+
+
+
+
+{% if request.session.subscribed != True and request.session.hide != True %}
+
+
+{% block homemodal %}
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Get our latest updates direct in your inbox</p>
+        <form method="POST" id="subscribe-modal" action="{% url 'subscribe-newsletter' %}">
+
+            {% csrf_token %}
+
+            {{request.subscribe_form.email_id.errors}}
+
+            {{request.subscribe_form.email_id }}
+
+            
+
+            <div class="btnbox text-center">
+                <input type="submit" name="submit" onclick="document.getElementById('subscribe-modal').submit();" value="Send Me Updates" class="btn btn-priamry">
+            </div>
+        </form>
+    </div>
 
 </div>
+
+
+
+
+
+
+
+
+
+{% endblock homemodal %}
+
+
+
+
+
+
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
 
@@ -72,9 +322,12 @@
  segment = document.getElementById('wheel-data').textContent;
  wheel_data=JSON.parse(JSON.parse(segment))
 
+
 var no_of_segment="{{len}}"
 
+var winners_total="{{winner_in_list}}"
 
+var announcements= 0;
 
 
 
@@ -92,15 +345,26 @@ var no_of_segment="{{len}}"
     'animation': {
         'type': 'spinToStop',
         'duration': 5,
-        'spins': 8,
+        'spins': 100,
+        'easing':"power4",
         'callbackFinished': alertPrize
     }
 });
 
 // Called by the onClick of the canvas, starts the spinning.
 function startSpin() {
+
+    
+
+
     // Stop any current animation.
     theWheel.stopAnimation(false);
+
+    // Get random angle inside specified segment of the wheel.
+    let stopAt = theWheel.getRandomForSegment(announcements+1);
+ 
+    // Important thing is to set the stopAngle of the animation before stating the spin.
+    theWheel.animation.stopAngle = stopAt;
 
     // Reset the rotation angle to less than or equal to 360 so spinning again works as expected.
     // Setting to modulus (%) 360 keeps the current position.
@@ -108,27 +372,60 @@ function startSpin() {
 
     // Start animation.
     theWheel.startAnimation();
+
 }
 
-function alertPrize(indicatedSegment) {
-    // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-    alert("Congratulations " + indicatedSegment.text);
+function alertPrize(indicatedSegment){
+    $('#winnermodal').modal('show')
+    $("#winnername").html(indicatedSegment.text)
+    announcements=announcements + 1;
+
+    if (announcements < winners_total){
+        $("#winnerfotter").html("Next Winner In 5 Secs")
+        setTimeout(function() { 
+            $('#winnermodal').modal('hide')
+            startSpin();
+            }, 7000);
+
+        }
+    else{
+        $("#winnerfotter").empty()
+        
+
+        setTimeout(function() {
+            
+            $('#winnermodal').modal('hide')
+            location.reload();
+        }, 7000);
+
+    }
 }
+    
 
 
 
+{% if wheel_data %}
 $(function(){
     $('.timer').startTimer({
       onComplete: function(){
+
         startSpin();
-      },
+
+           
+        },
       allowPause: true
     });
 })
+{% endif %}
+
+
+
+
+
+
 
 
 </script>
-
 
 {% endblock content %}
 

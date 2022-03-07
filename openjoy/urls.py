@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from sitesetting.views import index_view
+from sitesetting.views import index_view,info_view,contact_request,subscribe_newsletter
 
 urlpatterns = [
     path('',index_view,name="index"),
+    path("info/<int:id>",info_view,name="site-info"),
+    path("contact",contact_request,name='contact-request'),
+    path("subscribe",subscribe_newsletter,name="subscribe-newsletter"),
     path('games/',include("games.urls" ,namespace="games")),
     path('giveaway/',include("giveaways.urls",namespace="giveaway")),
     path('admin/', admin.site.urls),
