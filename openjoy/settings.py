@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'sitesetting',
     'giveaways',
     'kidstore',
+    # The general purpose templates
+    'django_adminlte',
+    # Optional: Skin for the admin interface
+    'django_adminlte_theme',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

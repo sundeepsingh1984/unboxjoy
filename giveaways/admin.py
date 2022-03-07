@@ -230,7 +230,6 @@ class QuillPostAdmin(admin.ModelAdmin):
             + "?"
             +"giveaway=" +str(obj.giveaway_id)
         )
-        print(url)
         return format_html('<a href="{}">{} Registrations</a>', url, count)
         
         

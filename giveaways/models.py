@@ -7,6 +7,7 @@ from django_countries.fields import CountryField
 from django.core.validators import RegexValidator
 from django.urls import reverse
 
+
 # Create your models here.
 
 #GiveAway Category Model
@@ -19,9 +20,7 @@ class GiveawayCategory(models.Model):
 
 
 
-class WinnerManager(models.Manager):
-    def get_winners(self):
-        return self.filter(winner='True')
+
  
 
 
@@ -71,7 +70,6 @@ class Player(models.Model):
     address=models.TextField(blank="False",null="False")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    winners=WinnerManager()
     
 
     
@@ -88,8 +86,9 @@ class GiveawayRegistration(models.Model):
     winner=models.BooleanField(default=False,blank="False",null="False")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    winners=WinnerManager()
-    
+
+  
+ 
     def __str__(self):
         return f'{self.player.name}({self.reg_id})'
 

@@ -6,8 +6,10 @@
 
 
 
-
 {% block content %}
+
+
+
     
 {% block banner %}
 {% include "common/banner.html" %}
@@ -386,6 +388,8 @@
   
   
   {% for g in announced_giveaways  %}
+
+
   
   {% for giveaway in g %}
 
@@ -403,11 +407,17 @@
           <ul class="list-group list-group-flush">
 
             
-            {% for win in giveaway.giveawayregistration_set.get_winners.all %}
+            {% for win in giveaway.giveawayregistration_set.all%}
 
-            <li class="list-group-item bg-warning"><div class="d-flex"><img src="{{win.player.profile_image.url}}" alt="user" width="50" class="rounded-circle"> <span> <h6 class="font-medium">{{win.player.name}}</h6> </span> 
+
+            {% if win.winner %}
+            
+            <li class="list-group-item bg-warning"><div class="d-flex"><img src="{{win.player.profile_image.url}}" alt="user" width="50" class="rounded-circle"> <span> <h6 class="font-medium">{{win.player.name}}</h6>  <span class="badge badge-primary">{{win.player.country}}</span> </span> 
             </div></li>
-            {% endfor %}
+           
+            {% endif %}
+
+             {% endfor %}
 
             
           

@@ -10,6 +10,17 @@ from .forms import PlayerForm
 from sitesetting.shortcuts import get_banner_by_name
 from django.contrib import messages
 # Create your views here.
+from django import template
+register = template.Library()
+
+
+@register.filter
+def in_winners(registrations ):
+    return registrations.filter(winner="True")
+
+
+
+
 
 
 def giveaway_catogorical_view(request,cat_id):
