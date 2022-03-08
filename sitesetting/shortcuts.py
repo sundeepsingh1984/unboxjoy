@@ -84,10 +84,10 @@ def divide_chunks(l, n):
 def get_banner_by_name(name):
 
     try:
-        banner=Banner.objects.filter(banner_name__istartswith=name ,activate="True").get()
+        banner=Banner.objects.filter(banner_name__istartswith=name ,activate="True").first()
 
     except Banner.DoesNotExist as e:
-        banner=Banner.objects.filter(activate="True").all()[0]
+        banner=Banner.objects.filter(activate="True").first()
 
         
 

@@ -1,6 +1,3 @@
-from atexit import register
-import imp
-from msilib.schema import Class
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.http import urlencode

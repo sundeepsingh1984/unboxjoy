@@ -134,3 +134,4 @@ class ContactRequestAdmin(admin.ModelAdmin):
 admin.site.register(ContactRequest,ContactRequestAdmin)
 
 
+admin.site.register(SocialMediaFeedType,SocialMediaFeedTypeAdmin)

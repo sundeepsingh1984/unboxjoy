@@ -1,10 +1,5 @@
-from distutils.command.upload import upload
-from pyexpat import model
-from turtle import update
 from django.db import models
-from enum import Enum, unique
 from django.urls import reverse
-from django.forms import CharField
 from django_quill.fields import QuillField
 from sqlalchemy import null
 from django.core.validators import RegexValidator
@@ -143,7 +138,7 @@ class Feeds(models.Model):
 
     
     def __str__(self):
-        return f'{self.feed_type.feed_type_name}({self.id}) {self.feed_type.feed_code}'
+        return f'{self.feed_type.feed_type_name} {self.feed_code}'
 
 
 

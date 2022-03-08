@@ -1,5 +1,3 @@
-from email import message
-from locale import format_string
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from .models import *
@@ -230,6 +228,7 @@ class QuillPostAdmin(admin.ModelAdmin):
             + "?"
             +"giveaway=" +str(obj.giveaway_id)
         )
+        print(url)
         return format_html('<a href="{}">{} Registrations</a>', url, count)
         
         

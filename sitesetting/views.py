@@ -50,13 +50,18 @@ def index_view(request):
 
    #obtain random custom ads 
    ad_qs=list(CustomAdvertisement.objects.filter(active="True").all())
-   random_ads = random.sample(ad_qs, 2)
+   if ad_qs:
+      random_ads = random.sample(ad_qs, 2)
+
+   else:
+      random_ads=None
 
 
    #BRAND-BANNER
    try: 
-      banner_obj=Banner.objects.filter(banner_name__istartswith="brand-banner").get()
-      brand_banner=banner_obj.bannerimages_set.all()
+      banner_obj=Banner.objects.get(banner_name__istartswith="brand-banner")
+      if banner_obj:
+         brand_banner=banner_obj.bannerimages_set.all()
    except ObjectDoesNotExist:
       brand_banner=None
       pass
@@ -66,8 +71,10 @@ def index_view(request):
 
    #Youtube_videos
 
-   youtube_feed_obj=SocialMediaFeedType.objects.get(feed_type_name__istartswith="youtube")
-   youtube_feeds=youtube_feed_obj.feeds_set.order_by("-created_at").all()[:2]
+   youtube_feed_obj=SocialMediaFeedType.objects.filter(feed_type_name__istartswith="youtube").first()
+
+   if youtube_feed_obj:
+      youtube_feeds=youtube_feed_obj.feeds_set.order_by("-created_at").all()[:2]
 
 
    #trending_blogs
@@ -76,11 +83,12 @@ def index_view(request):
 
    #instagram
    
-   insta_feed_obj=SocialMediaFeedType.objects.get(feed_type_name__istartswith="instagram")
-   insta_feed=insta_feed_obj.feeds_set.order_by("-created_at").all()[:3]
+   insta_feed_obj=SocialMediaFeedType.objects.filter(feed_type_name__istartswith="instagram").first()
+   if insta_feed_obj:
+      insta_feed=insta_feed_obj.feeds_set.order_by("-created_at").all()[:3]
    
    # return template
-   return render(request,"landing.html",{"trending_blogs":blog_qs,"instafeed":insta_feed,"youtube_feeds":youtube_feeds,"brand_banner":brand_banner,"ads":random_ads,"banner":banner,"time_diff":time_diff,"wheel_data":json.dumps(wheeldata) if wheeldata else None,"len":len(wheeldata) if wheeldata else None,"winner_in_list":total_winners })
+   return render(request,"landing.html",{"trending_blogs":blog_qs,"instafeed":insta_feed if insta_feed else None,"youtube_feeds":youtube_feeds if youtube_feeds else None,"brand_banner":brand_banner if brand_banner else None,"ads":random_ads if random_ads else None,"banner":banner,"time_diff":time_diff,"wheel_data":json.dumps(wheeldata) if wheeldata else None,"len":len(wheeldata) if wheeldata else None,"winner_in_list":total_winners })
     
 
 def info_view(request,id):
